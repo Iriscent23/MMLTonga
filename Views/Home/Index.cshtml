@@ -1,0 +1,63 @@
+﻿<head>
+	<link rel="stylesheet" href="~/css/IndexStyle.css">
+</head>
+
+
+@*This is for the HERO SECTION of the Home Page*@
+
+<body>
+	<div class="Section">
+		<div class="Container">
+			<div class="Title">FIETOKONI & MEAFAKATONGA (NZ) LTD</div>
+			<div class="Description">
+                <span>Tui Pe 'O Fai Totonu<br /></span>
+				<span>Serving with Trust and Integrity.</span>
+			</div>
+			<div class="Button">
+                <a asp-controller="Home" asp-action="SendMoney" class="btn btn-primary">Send Money</a>
+                <a asp-controller="ExchangeRates" asp-action="Index" class="btn btn-outline-primary">Exchange Rates</a>
+			</div>
+		</div>
+		<div class="Image">
+            <img class="Istockphoto1386672459612x6121" src="https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" />
+		</div>
+    </div>
+
+    @*Section 2 - Brief Introduction of MML*@
+
+    <div class="responsive-rectangle">
+        <div class="content-wrapper">
+            <div class="content-image">
+                <img src="https://polynesia.com/blog/wp-content/uploads/2016/10/tongan_villagers111014-1.jpg" alt="Melie Mei Langi Image">
+            </div>
+
+            <div class="content-text">
+                <h2>Melie Mei Langi</h2>
+                <p>From a local solution in Robinvale to a global service. Founded in 2002 to help locals send money to Tonga, we've expanded across Australia and beyond. Experience our renowned supermarkets and meat imports in Tonga, with services now reaching as far as USA, American Samoa, and Fiji. Your trust is our success. Sending love, across miles.</p>
+            </div>
+        </div>
+    </div>
+
+    @*Section 3 - Handicraft Shop Preview*@
+    <section class="handicraft-preview">
+        <h2>Explore Our Handicraft Collections</h2>
+        <div class="products">
+            <div class="product-card">
+                <img src="http://3.bp.blogspot.com/-u0_7mVoDnbw/UjfW3NJ1xfI/AAAAAAAATcU/5sZCQ6OVd5o/s320/GEDC0993-1.JPG" alt="Handicraft Product 1">
+                <h3>Tonga Fan</h3>
+                <p>$15.00 NZD </p>
+            </div>
+            <div class="product-card">
+                <img src="https://tongatourism.travel/wp-content/uploads/2022/08/Haapai-Whale-and-Sail-Ltd-8.jpg" alt="Handicraft Product 3">
+                <h3>Stylish Bag (Ngatu Kato)</h3>
+                <p>$40.00 NZD</p>
+            </div>
+            <div class="product-card">
+                <img src="https://resources.stuff.co.nz/content/dam/images/1/n/2/i/l/9/image.related.StuffLandscapeSixteenByNine.1240x700.1n29j3.png/1511746014908.jpg?format=pjpg&optimize=medium" alt="Handicraft Product 4">
+                <h3>Basket</h3>
+                <p>$275.00</p>
+            </div>
+        </div>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-primary">Shop Now</a>
+    </section>
+</body>

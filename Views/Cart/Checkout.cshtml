@@ -1,0 +1,118 @@
+﻿@*@model ShoppingCart*@
+@model MMLTonga.Models.ShoppingCartViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Checkout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/currencystyle.css">
+}
+
+<div class="centered-header">
+    <h1 class="checkout-title">Checkout</h1> 
+</div>
+<div id="checkoutTable"></div>
+
+<!-- Exchange Rates Table -->
+<div class="container exchange-rates">
+    <h2 style="margin-top: 30px;">Exchange Rates</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Currency</th>
+                <th>Send Rate</th>
+                <th>Receive Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rate in Model.ExchangeRates)
+            {
+                <tr>
+                    <td>@rate.Country</td>
+                    <td>@rate.Currency</td>
+                    <td>@rate.SendRate</td>
+                    <td>@rate.ReceiveRate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Currency Converter Section -->
+<div class="hero-section">
+    <div class="converter-section">
+        <h2>Convert your total amount to pay here</h2>
+        <div class="row">
+            <div class="col">
+                <label for="input_currency">Send</label>
+                <select name="currency" class="currency">
+                    <option>Country</option>
+                    <!-- Populate with actual country options -->
+                </select>
+                <input type="text" id="input_currency">
+            </div>
+            <div class="col">
+                <label for="output_currency">Receive</label>
+                <select name="currency" class="currency">
+                    <option>Country</option>
+                    <!-- Populate with actual country options -->
+                </select>
+                <input type="text" id="output_currency" disabled>
+            </div>
+        </div>
+        <button onclick="convert()">Convert</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/script.js"></script>
+    <script>
+        function payNow() {
+            // Redirect to the AgentDetails/Index page
+            window.location.href = '@Url.Action("Index", "AgentDetails")';
+        }
+
+        // The contents of this script will create the table on the checkout page.
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectedProducts = JSON.parse(localStorage.getItem('selectedProducts'));
+            const checkoutTableDiv = document.getElementById('checkoutTable');
+
+            if (selectedProducts && selectedProducts.length > 0) {
+                let tableHtml = '<table class="table"><thead><tr><th>Product ID</th><th>Name</th><th>Price</th><th>Quantity</th><th>Total</th></tr></thead><tbody>';
+
+                let totalAmount = 0;
+                selectedProducts.forEach(product => {
+                    const total = product.price * product.quantity;
+                    totalAmount += total;
+                    // Update the way price and total are displayed
+                    tableHtml += `<tr>
+                                            <td>${product.id}</td>
+                                            <td>${product.name}</td>
+                                            <td>NZD $${product.price.toFixed(2)}</td>
+                                            <td>${product.quantity}</td>
+                                            <td>NZD $${total.toFixed(2)}</td>
+                                          </tr>`;
+                });
+
+                tableHtml += '</tbody></table>';
+                tableHtml += "<div class='total-amount-container'>";
+                tableHtml += `<p class='total-amount'><strong>Total Amount: NZD $${totalAmount.toFixed(2)}</strong></p>`;
+                tableHtml += "<button class='btn btn-primary' onclick='payNow()'>Pay Now</button>";
+                tableHtml += "</div>"; // Close the total-amount-container div
+
+                checkoutTableDiv.innerHTML = tableHtml;
+                localStorage.removeItem('selectedProducts'); // Clear the products from local storage.
+            } else {
+                checkoutTableDiv.innerHTML = '<p>No products selected.</p>';
+            }
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

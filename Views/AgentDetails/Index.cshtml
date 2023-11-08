@@ -1,0 +1,49 @@
+﻿<link rel="stylesheet" href="~/css/ratestyle.css" />
+
+@model IEnumerable<MMLTonga.Models.AgentDetail>
+
+@{
+    ViewData["Title"] = "Agent Offices";
+}
+
+<section class="rates-section">
+    <div class="container text-center">
+        <h1 class="title-spacing">Agent Offices</h1>
+    </div>
+</section>
+@if (User.IsInRole("Admin"))
+{
+    <p><a class="btn btn-link" asp-action="Create">Add Agent Details</a></p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.AgentCompany)</th>
+            <th>@Html.DisplayNameFor(model => model.Address)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.AgentCompany)</td>
+            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.AgentID">Edit</a> |
+                    <a class="btn btn-link" asp-action="Details" asp-route-id="@item.AgentID">Details</a> |
+                    <a class="btn btn-link" asp-action="Delete" asp-route-id="@item.AgentID">Delete</a>
+                </td>
+            }
+            </tr>
+}
+    </tbody>
+</table>

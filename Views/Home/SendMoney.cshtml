@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="~/css/currencystyle.css">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="text-section">
+            <h2>International Money Transfer</h2>
+            <p>We send money to your loved ones fast!</p>
+        </div>
+
+        <div class="converter-section">
+            <h1>Currency Converter</h1>
+            <div class="row">
+                <div class="col">
+                    <label for="input_currency">Send</label>
+                    <select name="currency" class="currency">
+                        <option>Country</option>
+                    </select>
+                    <input type="text" name="" id="input_currency">
+                </div>
+                <div class="col">
+                    <label for="output_currency">Receive</label>
+                    <select name="currency" class="currency">
+                        <option>Country</option>
+                    </select>
+                    <input type="text" name="" id="output_currency" disabled>
+                </div>
+            </div>
+            <button onClick="convert()">Convert</button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>

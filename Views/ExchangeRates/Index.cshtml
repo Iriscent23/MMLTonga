@@ -1,0 +1,51 @@
+﻿
+<link rel="stylesheet" href="~/css/ratestyle.css" />
+
+@model IEnumerable<MMLTonga.Models.ExchangeRate>
+
+@{
+    ViewData["Title"] = "Exchange Rates";
+}
+
+<section class="rates-section">
+    <div class="container text-center">
+        <h1 class="title-spacing">Exchange Rates</h1>
+    </div>
+</section>
+@if (User.IsInRole("Admin"))
+{
+    <p><a class="btn btn-link" asp-action="Create">Add Rate</a></p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>@Html.DisplayNameFor(model => model.Currency)</th>
+            <th>@Html.DisplayNameFor(model => model.SendRate)</th>
+            <th>@Html.DisplayNameFor(model => model.ReceiveRate)</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                <td>@Html.DisplayFor(modelItem => item.Currency)</td>
+                <td>@Html.DisplayFor(modelItem => item.SendRate)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReceiveRate)</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.Country">Edit</a> |
+                        <a class="btn btn-link" asp-action="Details" asp-route-id="@item.Country">Details</a> |
+                        <a class="btn btn-link" asp-action="Delete" asp-route-id="@item.Country">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

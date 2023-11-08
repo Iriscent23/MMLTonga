@@ -1,0 +1,131 @@
+﻿@using MMLTonga.Models
+@model IEnumerable<Product>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}
+
+
+<div class="container mt-3 mb-3">
+
+    <!-- Display Success Messages -->
+    @if (TempData["CreateSuccess"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["CreateSuccess"]
+        </div>
+    }
+    @if (TempData["EditSuccess"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["EditSuccess"]
+        </div>
+    }
+    @if (TempData["DeleteSuccess"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["DeleteSuccess"]
+        </div>
+    }
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center" style="margin: 30px;">Browse our Special Handicrafts from Tonga!</h2>
+        </div>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <!-- Add Item Button -->
+        <div class="row">
+            <div class="col-12">
+                <a href="@Url.Action("Create", "Products")" class="btn btn-primary" style="margin-bottom: 30px;">Add Item</a>
+            </div>
+        </div>
+    }
+    <!-- Product listing -->
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <!-- Checkbox for Add to Cart -->
+                        <div class="form-check mb-2">
+                            <input type="checkbox" class="form-check-input product-checkbox" id="addToCartCheckbox-@product.Id" data-product-id="@product.Id" />
+                            <label class="form-check-label" for="addToCartCheckbox-@product.Id"></label>
+                        </div>
+                        <!-- Product Image -->
+                        @if (string.IsNullOrEmpty(product.Image))
+                        {
+                            <img src="/images/noimage.jpg" class="card-img-top product-image" alt="No image available">
+                        }
+                        else
+                        {
+                            <img src="/images/@product.Image" class="card-img-top product-image" alt="@product.Name">
+                        }
+                        <!-- Product Name and Price -->
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">$@product.Price.ToString("N2")</p>
+                        <p class="card-text">Product ID: @product.Id</p>
+                        <!-- Action Buttons -->
+                        <div class="btn-group">
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary">View</a>
+                        </div>
+                        <label class="btn btn-primary" for="addToCartCheckbox-@product.Id">Add to cart</label>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Checkout Button -->
+    <div class="row">
+        <div class="col-12 text-center mt-4">
+            <button id="proceedToCheckout" class="btn btn-lg btn-success">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const proceedToCheckoutButton = document.getElementById('proceedToCheckout');
+
+            proceedToCheckoutButton.addEventListener('click', function () {
+                const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
+                let products = Array.from(checkedBoxes).map(cb => {
+                    return {
+                        id: cb.getAttribute('data-product-id'),
+                        name: cb.closest('.card-body').querySelector('.card-title').textContent,
+                        price: parseFloat(cb.closest('.card-body').querySelector('.card-text').textContent.replace('$', '')),
+                        quantity: 1 // If you have a field to select quantity, you can fetch it here
+                    };
+                });
+
+                if (products.length > 0) {
+                    generateCheckoutPage(products);
+                } else {
+                    alert('Please select at least one product.');
+                }
+            });
+
+            // This function must be within the same script block or earlier than your event handler
+            function generateCheckoutPage(products) {
+                localStorage.setItem('selectedProducts', JSON.stringify(products));
+                window.location.href = '/Cart/Checkout'; // Redirect to the Checkout action in CartController
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        // If you want to use JavaScript to handle the display or dismissal of the alerts,
+        // You can write that code here.
+        $(document).ready(function () {
+            // For example, to auto-dismiss the alerts after 5 seconds:
+            $(".alert-success").delay(5000).fadeOut(200);
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

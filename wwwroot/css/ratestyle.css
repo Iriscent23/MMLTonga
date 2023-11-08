@@ -1,0 +1,87 @@
+﻿/*<style >
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #dddddd;*/ /* Grid lines */
+    /*padding: 8px;*/ /* Spacing inside each cell */
+    /*text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;*/ /* Light gray background for headers */
+/*}
+
+</style >*/
+
+
+/* RateStyleSheet.css */
+
+/* Base Styling */
+
+/* RateStyleSheet.css */
+
+/* Basic table styling */
+
+.rates-section {
+    padding-top: 40px; /* Adds space from the navigation */
+    padding-bottom: 20px; /* Optional: Adds space below the section */
+}
+
+.title-spacing {
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #9FE870;
+}
+
+    /* Table headers */
+    .table thead {
+        background-color: #9FE870; /* Primary Color */
+    }
+
+        .table thead th {
+            padding: 10px 15px;
+            border-bottom: 1px solid black;
+            font-weight: bold;
+            color: #67B03B; /* Text Color */
+            text-align: left;
+        }
+
+    /* Table body rows and cells */
+    .table tbody tr:nth-child(odd) {
+        background-color: #f7f7f7; /* Zebra-striping for better readability */
+    }
+
+    .table tbody td {
+        padding: 10px 15px;
+        border-bottom: 1px solid black; /* Subtle borders for rows */
+        color: black; /* Standard text color */
+    }
+
+    /* Hover effect for rows */
+    .table tbody tr:hover {
+        background-color: #e6f4d0; /* Lighter shade of the primary color for hover effect */
+    }
+
+    /* Actions styling for Admin role */
+    .table tbody td a {
+        margin-right: 5px;
+        color: #67B03B; /* Text Color */
+        text-decoration: none;
+    }
+
+        .table tbody td a:hover {
+            text-decoration: underline;
+        }
+
+/* Responsive adjustments */
+@media only screen and (max-width: 767px) {
+    /* ... Your responsive styles if any ... */
+}
